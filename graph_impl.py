@@ -49,6 +49,9 @@ class Vertex(IVertex):
         return self._visited
 
 class Edge(IEdge):
+    def __init__(self):
+        self._name = None
+        self._weight = None
     def get_name(self) -> str: 
         pass
     def set_name(self, name: str) -> None: 
