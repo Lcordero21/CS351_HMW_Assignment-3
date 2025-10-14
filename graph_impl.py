@@ -16,14 +16,14 @@ class Graph(IGraph):
         pass
     def add_vertex(self, vertex: IVertex) -> None: 
         #DOUBLE CHECK!!
-        self.set_name(vertex)
+        Vertex.set_name(vertex)
         self.main_graph[vertex]= []
     def remove_vertex(self, vertex_name: str) -> None: 
         self.main_graph.pop(vertex_name)
     def add_edge(self, vertex1, vertex2) -> None: 
-        pass
+        Vertex.add_edge(self.main_graph,vertex1,vertex2)
     def remove_edge(self, vertex1, vertex2) -> None: 
-        pass
+        Vertex.remove_edge(self, vertex1, vertex2)
 
 
 
@@ -35,10 +35,12 @@ class Vertex(IVertex):
         return self._name
     def set_name(self, name: str) -> None:
         self._name = name
-    def add_edge(self, vertex1, vertex2) -> None: 
-        pass
-    def remove_edge(self, edge_name: str) -> None:
-        pass
+    def add_edge(self, graph, vertex1, vertex2) -> None: 
+        graph[vertex1].append(vertex2)
+        graph[vertex2].append(vertex1)
+    def remove_edge(self, graph, vertex1, vertex2) -> None:
+        graph[vertex1].remove(vertex2)
+        graph[vertex2].remove(vertex1)
     def get_edges(self) -> List[IEdge]: 
         pass
     def set_visited(self, visited: bool) -> None: 
