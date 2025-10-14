@@ -7,18 +7,41 @@ from typing import Dict, List, Protocol
 class Graph(IGraph):
     def __init__(self):
         self._adj_list: Dict[str, List[str]] = {}
+        self._vertices: List[IVertex] = []
 
     def get_vertices(self) -> List[IVertex]: 
-        pass
+        return self._vertices
+
     def get_edges(self) -> List[IEdge]: 
         pass
+
     def add_vertex(self, vertex: IVertex) -> None: 
-        pass
+        self._vertices.append(Vertex(vertex))
+
     def remove_vertex(self, vertex_name: str) -> None: 
         pass
-    def add_edge(self, vertex1, vertex2) -> None: 
-        pass
-    def remove_edge(self, vertex1, vertex2) -> None: 
+
+    def add_edge(self, edge: IEdge, from_vertex_name: str, to_vertex_name: str) -> None: 
+        from_vertex = None
+        to_vertex = None
+
+        for vertex in self._vertices:
+            if vertex.get_name() == from_vertex_name:
+                from_vertex = vertex
+
+            if vertex.get_name() == to_vertex_name:
+                to_vertex = vertex
+        
+        if from_vertex is None or to_vertex is None:
+            raise Exception("One or more of the vertexes do not exist")
+
+        the_edge = Edge(edge, to_vertex)
+        from_vertex.add_edge(the_edge)
+
+        second_edge = Edge(edge, from_vertex)
+        to_vertex.add_edge(second_edge)
+
+    def remove_edge(self, edge_name: str) -> None: 
         pass
 
 
@@ -59,13 +82,18 @@ class Edge(IEdge):
         self._destination = destination
         self._is_bi_directional: bool = False
         self._weight: float = None
+
     def get_name(self) -> str: 
         return self._name
+    
     def set_name(self, name: str) -> None: 
         self._name = name
+
     def get_destination(self) -> IVertex: 
         return self._destination
+    
     def get_weight(self) -> float: 
         return self._weight
+    
     def set_weight(self, weight: float) -> None:
         self._weight = weight
