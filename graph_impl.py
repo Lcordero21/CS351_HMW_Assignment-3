@@ -7,7 +7,19 @@ from typing import Dict, List, Protocol, TypeVar, Tuple, Optional
 T= TypeVar('T')
 
 class Graph[T](IGraph[T]):
-    def __init__(self):
+    """
+    [PURPOSE OF CLASS HERE]
+    """
+    def __init__(self)-> None:
+        """
+        Input: None
+        Output: None
+        Variables:
+            self._adj_list (Type, purpose(?))
+            self._vertices ([INSERT PURPOSE]) 
+        Purpose: 
+            To initialize the graph. 
+        """
         self._adj_list: Dict[str, List[str]] = {}
         self._vertices: List[IVertex] = []
 
@@ -82,6 +94,17 @@ class Vertex(IVertex):
 
 class Edge(IEdge):
     def __init__(self, name: str, destination) -> None:
+        """
+        Input:
+        Output:
+        Variables:
+            self._name (Type, maybe the highway name?)
+            self._destination
+            self._is_bi_directional
+            self._weight (this is the cost of traveling along 
+            this edge, like how far away two cities are from 
+            eachother)
+        """
         self._name: str = name
         self._destination = destination
         self._is_bi_directional: bool = False
@@ -100,4 +123,6 @@ class Edge(IEdge):
         return self._weight
     
     def set_weight(self, weight: float) -> None:
+        """
+        """
         self._weight = weight
