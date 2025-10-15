@@ -1,10 +1,12 @@
 from graph_interfaces import IEdge, IGraph, IVertex
-from typing import Dict, List, Protocol
+from typing import Dict, List, Protocol, TypeVar, Tuple, Optional
 
 # Implementation definitions
 # You should implement the bodies of the methods required by the interface protocols.
 
-class Graph(IGraph):
+T= TypeVar('T')
+
+class Graph[T](IGraph[T]):
     def __init__(self):
         self._adj_list: Dict[str, List[str]] = {}
         self._vertices: List[IVertex] = []
@@ -13,7 +15,7 @@ class Graph(IGraph):
         return self._vertices
 
     def get_edges(self) -> List[IEdge]: 
-        pass
+        return Vertex.get_edges()
 
     def add_vertex(self, vertex: IVertex) -> None: 
         self._vertices.append(Vertex(vertex))
@@ -51,6 +53,8 @@ class Vertex(IVertex):
         self._visited: bool = False
         self._name: str = name
         self._edges: List[IEdge] = []
+        self._data: Optional[T] = None
+        self._coordinates: Tuple[float,float] = (0,0)
 
     def get_name(self) -> str: 
         return self._name
