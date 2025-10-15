@@ -7,10 +7,9 @@ from typing import Dict, List, Protocol, TypeVar, Tuple, Optional
 T= TypeVar('T')
 
 class Graph[T](IGraph[T]):
-    """
-    [PURPOSE OF CLASS HERE]
-    """
+
     def __init__(self)-> None:
+
         """
         Input: None
         Output: None
@@ -20,6 +19,7 @@ class Graph[T](IGraph[T]):
         Purpose: 
             To initialize the graph. 
         """
+        
         self._adj_list: Dict[str, List[str]] = {}
         self._vertices: List[IVertex] = []
 
@@ -124,5 +124,6 @@ class Edge(IEdge):
     
     def set_weight(self, weight: float) -> None:
         """
+
         """
         self._weight = weight
