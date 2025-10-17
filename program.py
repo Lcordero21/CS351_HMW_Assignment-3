@@ -1,8 +1,14 @@
 from typing import Optional
 from graph_interfaces import IGraph, IVertex
+from graph_impl import Graph, Vertex, Edge
 
 def read_graph(file_path: str) -> IGraph:  
     """Read the graph from the file and return the graph object"""
+    temp_graph = Graph()
+    with open(file_path) as paths:
+        for line in paths:
+            origin, destination, highway, distance = line.split(", ")
+        
     raise NotImplementedError  
 
 def print_dfs(graph: IGraph, start_vertex: IVertex) -> None: 

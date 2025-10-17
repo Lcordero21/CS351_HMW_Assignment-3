@@ -29,11 +29,16 @@ class Graph[T](IGraph[T]):
     def get_edges(self) -> List[IEdge]: 
         return Vertex.get_edges()
 
-    def add_vertex(self, vertex: IVertex) -> None: 
+    def add_vertex(self, vertex_name: IVertex) -> None: 
+        for vertex in self._vertices:
+            if vertex.get_name() == vertex_name:
+                return None
         self._vertices.append(Vertex(vertex))
 
     def remove_vertex(self, vertex_name: str) -> None: 
-        pass
+        for vertex in self._vertices:
+            if vertex.get_name() == vertex_name:
+                self._vertices.remove(self._vertices[i])
 
     def add_edge(self, edge: IEdge, from_vertex_name: str, to_vertex_name: str) -> None: 
         from_vertex = None
