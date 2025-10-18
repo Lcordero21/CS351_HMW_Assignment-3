@@ -29,18 +29,19 @@ class Graph[T](IGraph[T]):
     def get_edges(self) -> List[IEdge]: 
         return Vertex.get_edges()
 
-    def add_vertex(self, vertex_name: IVertex) -> None: 
+    def add_vertex(self, vertex_name: str) -> None: 
         for vertex in self._vertices:
             if vertex.get_name() == vertex_name:
                 return None
-        self._vertices.append(Vertex(vertex))
+        self._vertices.append(Vertex(vertex_name))
 
     def remove_vertex(self, vertex_name: str) -> None: 
         for vertex in self._vertices:
             if vertex.get_name() == vertex_name:
-                self._vertices.remove(self._vertices[i])
+                self._vertices.remove(self._vertices[vertex])
+        
 
-    def add_edge(self, edge: IEdge, from_vertex_name: str, to_vertex_name: str) -> None: 
+    def add_edge(self, edge: IEdge, from_vertex_name: str, to_vertex_name: str, weight: float) -> None: 
         from_vertex = None
         to_vertex = None
 
@@ -54,10 +55,10 @@ class Graph[T](IGraph[T]):
         if from_vertex is None or to_vertex is None:
             raise Exception("One or more of the vertexes do not exist")
 
-        the_edge = Edge(edge, to_vertex)
+        the_edge = Edge(edge, to_vertex, weight)
         from_vertex.add_edge(the_edge)
 
-        second_edge = Edge(edge, from_vertex)
+        second_edge = Edge(edge, from_vertex, weight)
         to_vertex.add_edge(second_edge)
 
     def remove_edge(self, edge_name: str) -> None: 
@@ -66,12 +67,10 @@ class Graph[T](IGraph[T]):
 
 
 class Vertex(IVertex):
-    def _init_(self, name):
+    def __init__(self, name):
         self._visited: bool = False
         self._name: str = name
         self._edges: List[IEdge] = []
-        self._data: Optional[T] = None
-        self._coordinates: Tuple[float,float] = (0,0)
 
     def get_name(self) -> str: 
         return self._name
@@ -83,6 +82,7 @@ class Vertex(IVertex):
         self._edges.append(edge)
 
     def remove_edge(self, edge_name) -> None:
+        #This one may not be 100% correct...
         for edge in self._edges:
             if edge.get_name() == edge_name:
                 self._edges.remove(edge)
@@ -98,7 +98,7 @@ class Vertex(IVertex):
         return self._visited
 
 class Edge(IEdge):
-    def __init__(self, name: str, destination) -> None:
+    def __init__(self, name: str, destination: IVertex, weight: float) -> None:
         """
         Input:
         Output:
@@ -111,9 +111,8 @@ class Edge(IEdge):
             eachother)
         """
         self._name: str = name
-        self._destination = destination
-        self._is_bi_directional: bool = False
-        self._weight: float = None
+        self._destination: IVertex = destination
+        self._weight: float = weight
 
     def get_name(self) -> str: 
         return self._name

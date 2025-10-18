@@ -7,12 +7,16 @@ def read_graph(file_path: str) -> IGraph:
     temp_graph = Graph()
     with open(file_path) as paths:
         for line in paths:
-            origin, destination, highway, distance = line.split(", ")
-        
-    raise NotImplementedError  
+            origin, destination, highway, distance = line.split(",")
+            if origin != "source":
+                temp_graph.add_vertex(origin)
+                temp_graph.add_vertex(destination)
+                temp_graph.add_edge(highway, origin, destination, distance)
+    return temp_graph
 
 def print_dfs(graph: IGraph, start_vertex: IVertex) -> None: 
     """Print the DFS traversal of the graph starting from the start vertex"""
+    
     raise NotImplementedError  
 
 def print_bfs(graph: IGraph, start_vertex: IVertex) -> None: 
@@ -22,6 +26,8 @@ def print_bfs(graph: IGraph, start_vertex: IVertex) -> None:
 
 def main() -> None:
     graph: IGraph = read_graph("graph.txt")
+    for i in graph.get_vertices():
+        print(i.get_name())
     start_vertex_name: str  = input("Enter the start vertex name: ")
 
     # Find the start vertex object
