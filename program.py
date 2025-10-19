@@ -20,9 +20,10 @@ def print_dfs(graph: IGraph, start_vertex: IVertex) -> None:
     #Set every vertex's visited_var to false
     #maybe create a new var with graph parameter
     start = start_vertex
+    stack = [] #push all vertices into this stack(?)  and - check slides
     visited = [] #Will add visited vertices name to the list for end result
     visited_adj_list = Graph() #This is where the actual object adressesses will go for visited vertices
-    
+
 
 
 def print_bfs(graph: IGraph, start_vertex: IVertex) -> None: 
