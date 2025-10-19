@@ -16,8 +16,14 @@ def read_graph(file_path: str) -> IGraph:
 
 def print_dfs(graph: IGraph, start_vertex: IVertex) -> None: 
     """Print the DFS traversal of the graph starting from the start vertex"""
+
+    #Set every vertex's visited_var to false
+    #maybe create a new var with graph parameter
+    start = start_vertex
+    visited = [] #Will add visited vertices name to the list for end result
+    visited_adj_list = Graph() #This is where the actual object adressesses will go for visited vertices
     
-    raise NotImplementedError  
+
 
 def print_bfs(graph: IGraph, start_vertex: IVertex) -> None: 
     """Print the BFS traversal of the graph starting from the start vertex"""

@@ -9,39 +9,52 @@ T= TypeVar('T')
 class Graph[T](IGraph[T]):
 
     def __init__(self)-> None:
-
         """
-        Input: None
-        Output: None
-        Variables:
-            self._adj_list (Type, purpose(?))
-            self._vertices ([INSERT PURPOSE]) 
         Purpose: 
-            To initialize the graph. 
+            To initialize the graph with an adjacency list and a list for vertices
         """
-        
-        self._adj_list: Dict[str, List[str]] = {}
+        #self._adj_list: Dict[str, List[str]] = {}
         self._vertices: List[IVertex] = []
 
     def get_vertices(self) -> List[IVertex]: 
+        """
+        Purpose: 
+            To retrieve stored vertices.
+        """
         return self._vertices
 
-    def get_edges(self) -> List[IEdge]: 
-        return Vertex.get_edges()
+    def get_edges(self, vertex: IVertex) -> List[IEdge]: 
+        """
+        Purpose: 
+            To retrieve edges of a specified vertex
+        """
+        return vertex.get_edges()
 
     def add_vertex(self, vertex_name: str) -> None: 
+        """
+        Purpose:
+            To add a new vertex to the graph.
+        """
         for vertex in self._vertices:
             if vertex.get_name() == vertex_name:
                 return None
         self._vertices.append(Vertex(vertex_name))
 
     def remove_vertex(self, vertex_name: str) -> None: 
+        """
+        Purpose:
+            To remove a vertex from the self._vertices list.
+        """
         for vertex in self._vertices:
             if vertex.get_name() == vertex_name:
                 self._vertices.remove(self._vertices[vertex])
         
 
     def add_edge(self, edge: IEdge, from_vertex_name: str, to_vertex_name: str, weight: float) -> None: 
+        """
+        Purpose:
+            To add a new edge 
+        """
         from_vertex = None
         to_vertex = None
 
