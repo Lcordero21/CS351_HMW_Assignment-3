@@ -1,6 +1,7 @@
 from typing import Optional
 from graph_interfaces import IGraph, IVertex
 from graph_impl import Graph, Vertex, Edge
+import copy
 
 def read_graph(file_path: str) -> IGraph:  
     """Read the graph from the file and return the graph object"""
@@ -15,20 +16,67 @@ def read_graph(file_path: str) -> IGraph:
     return temp_graph
 
 def print_dfs(graph: IGraph, start_vertex: IVertex) -> None: 
-    """Print the DFS traversal of the graph starting from the start vertex"""
+    """
+        Print the DFS traversal of the graph starting from the start vertex (I used the iterative 
+        approach)
+    """
 
-    #Set every vertex's visited_var to false
-    #maybe create a new var with graph parameter
-    start = start_vertex
-    stack = [] #push all vertices into this stack(?)  and - check slides
-    visited = [] #Will add visited vertices name to the list for end result
-    visited_adj_list = Graph() #This is where the actual object adressesses will go for visited vertices
+    stack = []
+    visited = []
+    visited_adj_list = Graph()
+
+    stack.append(start_vertex)
+
+    while len(stack) is not 0:
+        vertex = stack.pop()
+        if vertex.is_visited() == False:
+            visited_adj_list.add_vertex(vertex)
+            visited.append(vertex.get_name())
+            vertex.set_visited(True)
+            for edge in vertex.get_edges():
+                stack.append(edge.get_destination())
+
+    reset_visited(visited_adj_list.get_vertices())
+
+    print(visited)
 
 
 
 def print_bfs(graph: IGraph, start_vertex: IVertex) -> None: 
-    """Print the BFS traversal of the graph starting from the start vertex"""
-    raise NotImplementedError  
+    """
+        Print the BFS traversal of the graph starting from the start vertex (I used the 
+        iterative approach)
+    """
+
+    queue = []
+    visited = []
+    visited_adj_list = Graph()
+
+    queue.append(start_vertex)
+    visited.append (start_vertex.get_name())
+    visited_adj_list.add_vertex(start_vertex)
+
+    while len(queue) is not 0:
+        vertex = queue.pop(0)
+        if vertex.is_visited() == False:
+            visited_adj_list.add_vertex(vertex)
+            visited.append(vertex.get_name())
+            vertex.set_visited(True)
+            for edge in vertex.get_edges():
+                queue.append(edge.get_destination())
+
+    
+    reset_visited (visited_adj_list.get_vertices())
+
+    print(visited)
+
+def reset_visited(graph:IGraph) -> None:
+    """
+    Purpose: 
+        Resets all the visited statuses of the each vertex in a graph.
+    """
+    for vertex in graph:
+        vertex.set_visited(False)
 
 
 def main() -> None:
