@@ -21,22 +21,22 @@ def print_dfs(graph: IGraph, start_vertex: IVertex) -> None:
         approach)
     """
 
+    reset_visited(graph.get_vertices())
+    
     stack = []
     visited = []
     visited_adj_list = Graph()
 
     stack.append(start_vertex)
 
-    while len(stack) is not 0:
+    while len(stack) != 0:
         vertex = stack.pop()
-        if vertex.is_visited() == False:
+        if vertex.is_visited() is False:
             visited_adj_list.add_vertex(vertex)
             visited.append(vertex.get_name())
             vertex.set_visited(True)
             for edge in vertex.get_edges():
                 stack.append(edge.get_destination())
-
-    reset_visited(visited_adj_list.get_vertices())
 
     print(visited)
 
@@ -47,6 +47,7 @@ def print_bfs(graph: IGraph, start_vertex: IVertex) -> None:
         Print the BFS traversal of the graph starting from the start vertex (I used the 
         iterative approach)
     """
+    reset_visited (graph.get_vertices())
 
     queue = []
     visited = []
@@ -55,28 +56,30 @@ def print_bfs(graph: IGraph, start_vertex: IVertex) -> None:
     queue.append(start_vertex)
     visited.append (start_vertex.get_name())
     visited_adj_list.add_vertex(start_vertex)
+    start_vertex.set_visited(True)
 
-    while len(queue) is not 0:
+    while len(queue) != 0:
         vertex = queue.pop(0)
-        if vertex.is_visited() == False:
-            visited_adj_list.add_vertex(vertex)
-            visited.append(vertex.get_name())
-            vertex.set_visited(True)
-            for edge in vertex.get_edges():
-                queue.append(edge.get_destination())
-
-    
-    reset_visited (visited_adj_list.get_vertices())
+        for edge in vertex.get_edges():
+            dest = edge.get_destination()
+            if dest.is_visited() is False:
+                queue.append(dest)
+                visited_adj_list.add_vertex(dest)
+                visited.append(dest.get_name())
+                dest.set_visited(True)
 
     print(visited)
 
-def reset_visited(graph:IGraph) -> None:
+def reset_visited(graph) -> None:
     """
     Purpose: 
         Resets all the visited statuses of the each vertex in a graph.
     """
     for vertex in graph:
         vertex.set_visited(False)
+    for vertex in graph:
+        if vertex.is_visited():
+            print("AAAAAAA")
 
 
 def main() -> None:
@@ -92,8 +95,8 @@ def main() -> None:
         print("Start vertex not found")
         return
     
-    print_dfs(graph, start_vertex)
     print_bfs(graph, start_vertex)
+    print_dfs(graph, start_vertex)
 
 
 if __name__ == "__main__":
